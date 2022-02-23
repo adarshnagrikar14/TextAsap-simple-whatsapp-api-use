@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                   right: 22.0,
                   top: 25.0,
                 ),
-                child: LiteRollingSwitch(
+                child: CustomSwitch(
                   value: false,
                   textOn: '   Dark',
                   textOff: 'Light',

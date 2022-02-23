@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LiteRollingSwitch extends StatefulWidget {
+class CustomSwitch extends StatefulWidget {
   @required
   final bool value;
   @required
@@ -17,7 +17,7 @@ class LiteRollingSwitch extends StatefulWidget {
   final Function onDoubleTap;
   final Function onSwipe;
 
-  const LiteRollingSwitch(
+  const CustomSwitch(
       {Key? key,
       this.value = false,
       this.textOff = "Off",
@@ -38,7 +38,7 @@ class LiteRollingSwitch extends StatefulWidget {
   _RollingSwitchState createState() => _RollingSwitchState();
 }
 
-class _RollingSwitchState extends State<LiteRollingSwitch>
+class _RollingSwitchState extends State<CustomSwitch>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
