@@ -32,10 +32,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _value = false;
-    });
-
     getBool();
   }
 
@@ -52,7 +48,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: _value ? Colors.grey[850] : Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade200,
         actions: [
@@ -205,8 +201,11 @@ class _MyAppState extends State<MyApp> {
     final bool? repeat = prefs.getBool('dark');
 
     setState(() {
-      _value = repeat!;
-      print(repeat.toString());
+      if (repeat == null) {
+        _value = false;
+      } else {
+        _value = repeat;
+      }
     });
   }
 }
