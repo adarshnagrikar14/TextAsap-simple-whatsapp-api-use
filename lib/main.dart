@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textasap/custom_sw.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
@@ -24,11 +27,16 @@ class _MyAppState extends State<MyApp> {
   final Color _greenCustom = HexColor('128C7E');
   final Color _darkCustom = HexColor('25383c');
   final TextEditingController _addressController = TextEditingController();
+  late bool _value;
 
   @override
   void initState() {
     super.initState();
-    setState(() {});
+    setState(() {
+      _value = false;
+    });
+
+    getBool();
   }
 
   @override
@@ -57,11 +65,21 @@ class _MyAppState extends State<MyApp> {
                   top: 25.0,
                 ),
                 child: CustomSwitch(
-                  value: false,
+                  value: _value,
                   textOn: '   Dark',
                   textOff: 'Light',
                   onDoubleTap: () {},
-                  onTap: () {},
+                  onTap: () async {
+                    setState(() {
+                      _value = !_value;
+                    });
+                    final prefs = await SharedPreferences.getInstance();
+                    if (_value) {
+                      await prefs.setBool('dark', true);
+                    } else {
+                      await prefs.setBool('dark', false);
+                    }
+                  },
                   colorOn: _darkCustom,
                   colorOff: _greenCustom,
                   iconOn: Icons.dark_mode,
@@ -179,6 +197,17 @@ class _MyAppState extends State<MyApp> {
     if (kDebugMode) {
       print('Check Number');
     }
+  }
+
+  void getBool() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final bool? repeat = prefs.getBool('dark');
+
+    setState(() {
+      _value = repeat!;
+      print(repeat.toString());
+    });
   }
 }
 
