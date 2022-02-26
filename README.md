@@ -1,4 +1,4 @@
-# textasap
+# TextAsap
 
 A flutter project to text an unsaved whatsapp number easily by just adding the mobile number.
 
