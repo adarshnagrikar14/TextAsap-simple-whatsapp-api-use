@@ -25,9 +25,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Color _greenCustom = HexColor('128C7E');
-  final Color _darkCustom = HexColor('25383c');
+  final Color _darkCustom = HexColor('212121');
+  final Color _darkBg = HexColor('212121');
+  final Color _darkAppbar = HexColor('25383c');
+  final Color _darkBorder = HexColor('306754');
   final TextEditingController _addressController = TextEditingController();
-  late bool _value;
+  late bool _value = false;
 
   @override
   void initState() {
@@ -48,9 +51,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _value ? Colors.grey[850] : Colors.white,
+      backgroundColor: _value ? _darkBg : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: !_value ? Colors.grey.shade200 : _darkAppbar,
         actions: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,10 +99,10 @@ class _MyAppState extends State<MyApp> {
           child: Text(
             'TextAsap',
             style: GoogleFonts.openSans(
-              textStyle: const TextStyle(
+              textStyle: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: !_value ? Colors.black87 : Colors.white,
               ),
             ),
           ),
@@ -112,11 +115,11 @@ class _MyAppState extends State<MyApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 35.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 35.0),
               child: Image(
                 image: AssetImage(
-                  'assets/images/dark.png',
+                  _value ? 'assets/images/light.png' : 'assets/images/dark.png',
                 ),
                 width: 280.0,
                 height: 280.0,
@@ -126,11 +129,30 @@ class _MyAppState extends State<MyApp> {
               padding:
                   const EdgeInsets.symmetric(vertical: 40.0, horizontal: 30.0),
               child: TextField(
+                style: TextStyle(
+                  color: _value ? Colors.white : Colors.black,
+                ),
                 controller: _addressController,
                 maxLength: 10,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Enter your number",
-                  border: OutlineInputBorder(),
+                  labelStyle:
+                      TextStyle(color: _value ? Colors.white : Colors.black),
+                  fillColor: Colors.white,
+                  border: const OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: _value ? Colors.white : Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      // color: Colors.green.shade900,
+                      color: _darkBorder,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -146,13 +168,13 @@ class _MyAppState extends State<MyApp> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    _greenCustom,
+                    !_value ? _greenCustom : _darkAppbar,
                   ),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(
-                        color: _greenCustom,
+                      side: const BorderSide(
+                        color: Colors.white,
                         // width: 1.0,
                       ),
                     ),
